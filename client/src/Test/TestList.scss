@@ -1,0 +1,22 @@
+.test-list{
+    
+    .row{
+        padding: 5px;
+    }
+
+    .table-header{
+        background: gray;
+        color: white;
+    }
+
+    .table-row {
+        border: solid 1px grey;
+        border-top: none;
+    }
+
+    .ellipsis-overflow-text{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

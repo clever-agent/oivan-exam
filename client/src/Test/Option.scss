@@ -1,0 +1,29 @@
+.option {
+    .input-content {
+        margin-left: -20px;
+    }
+
+    .delete-link{
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .option {
+        .input-content {
+            margin-left: 0px;
+        }
+
+        .form-check-input{
+            margin-left: 0px;
+        }
+
+        .correct{
+            padding-left: 20px;
+        }
+
+        .delete-link{
+            padding-left: 0px;
+        }
+    }
+}

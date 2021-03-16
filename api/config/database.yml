@@ -1,0 +1,30 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: oivan_exam_12
+  pool: 10
+  username: tuan
+  password:
+  host: postgres_postgresdb_1
+  port: 5432
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: oivan_exam_11_test
+  pool: 5
+  username: tuan
+  password:
+  host: postgres_postgresdb_1
+  port: 5432
+
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: oivan_exam_12
+  pool: 5
+  username: tuan
+  password:
+  host: postgres_postgresdb_1
+  port: 5432
