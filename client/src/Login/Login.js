@@ -27,10 +27,10 @@ export default class Login extends Component {
             let url = Setting.resolveAPIURL("/auth/login");
             axios.post(url, params)
                 .then(res => {
-                    if(res.data.token == null){
+                    if (res.data.token == null) {
                         alert("Wrong username or password");
                     }
-                    else{
+                    else {
                         this.setState({
                             token: res.data.token,
                             user_id: res.data.user_id
@@ -50,15 +50,15 @@ export default class Login extends Component {
     }
 
     checkValidParams = () => {
-        if(this.state.email === ''){
+        if (this.state.email === '') {
             alert("Email can't be empty");
             return false;
         }
-        else if(this.state.password === ''){
+        else if (this.state.password === '') {
             alert("Password can't be empty");
             return false;
         }
-        
+
         return true;
     }
 
@@ -71,7 +71,6 @@ export default class Login extends Component {
 
     render() {
         if (this.state.token !== null) {
-            console.log(this.state.token);
             return <Redirect push
                 to={{
                     pathname: "/UserList",

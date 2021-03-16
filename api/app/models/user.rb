@@ -1,18 +1,13 @@
 class User < ApplicationRecord
     has_many :user_sessions, dependent: :destroy
+    validates :email, uniqueness: true
 
     def self.authenticate email, password
         user = User.find_by_email(email)
-        if user == nil
-			return nil
-		end
+		return nil if user.nil?
 
 		hash = hash_password password
-        if user.password == hash
-            return user
-        else
-            return nil
-        end
+        user.password == hash ? user : nil
 	end
 
 	def self.hash_password password
@@ -20,30 +15,31 @@ class User < ApplicationRecord
 	end
 
     def self.create_or_update params
+        result = {success: true}
         begin
             user = User.find_by_id(params[:id])
-            if user.nil?
-                user = User.new
-            end
+            user = User.new if user.nil?
 
             user.name = params[:name]
             user.email = params[:email]
             user.password = User.hash_password(params[:password])
             user.role = params[:role]
-            user.save
-
-            return {success: true}
-        rescue
-            return {success: false, message: "Failed"}
-        end      
+            user.save!
+        rescue Exception => e
+            result = {success: false, message: e.message}
+        end 
+        
+        result
     end
 
     def self.destroy_user params
+        result = {success: true}
         begin
             User.destroy(params[:id])
-            return {success: true}
         rescue
-            return {success: false, message: "Failed"}
+            result = {success: false, message: e.message}
         end
+
+        result
     end
 end

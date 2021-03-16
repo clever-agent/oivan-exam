@@ -4,13 +4,10 @@ class Question < ApplicationRecord
 
     def self.create_or_update params, test_id
         item = Question.find_by_id(params[:id])
-        if item.nil?
-            item = Question.new
-        end
+        item = Question.new if item.nil?
 
         item.content = params[:content]
         item.test_id = test_id
-
         item.save
 
         item

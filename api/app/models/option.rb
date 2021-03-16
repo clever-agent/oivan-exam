@@ -3,9 +3,7 @@ class Option < ApplicationRecord
 
   def self.create_or_update params, question_id
     item = Option.find_by_id(params[:id])
-    if item.nil?
-        item = Option.new
-    end
+    item = Option.new if item.nil?
 
     item.content = params[:content]
     item.is_correct = params[:is_correct]

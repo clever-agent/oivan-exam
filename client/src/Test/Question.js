@@ -25,7 +25,6 @@ export default class Question extends Component {
         e.preventDefault();
 
         this.props.delete(index);
-        console.log("delete question ", index);
     }
 
     addOption = (e) => {
@@ -43,8 +42,6 @@ export default class Question extends Component {
     }
 
     optionOnChange = (index, data) => {
-        console.log("option changed ", data);
-
         let options = this.props.data.options;
         let option = options[index];
         option.content = data.content;
@@ -75,7 +72,7 @@ export default class Question extends Component {
                                 <Input value={this.props.data.content} onChange={value => this.onChange('content', value)}></Input>
                             </Col>
                             <Col md="2">
-                                <a className="delete-link" href="#" onClick={(e) => this.delete(e, this.props.index)}>Delete</a>
+                                <a className="delete-link" href="/#" onClick={(e) => this.delete(e, this.props.index)}>Delete</a>
 
                             </Col>
                         </Row>
@@ -92,7 +89,7 @@ export default class Question extends Component {
                         <Container>
                             <Row>
                                 <Col >
-                                    <a className="add-option" href="#" onClick={(e) => this.addOption(e)}>Add Option</a>
+                                    <a className="add-option" href="/#" onClick={(e) => this.addOption(e)}>Add Option</a>
                                 </Col>
                             </Row>
 

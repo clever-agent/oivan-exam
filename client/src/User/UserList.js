@@ -4,7 +4,7 @@ import axios from 'axios';
 import Setting from '../Shared/Setting';
 import { Container, Row, Col } from 'reactstrap';
 import { Redirect } from 'react-router';
-import {    
+import {
     Link
 } from "react-router-dom";
 import Menu from '../Menu/Menu';
@@ -31,7 +31,6 @@ export default class UserList extends Component {
         let url = Setting.resolveAPIURL("/portal/users");
         axios.get(url, { params: { token: this.props.location.state.token } })
             .then(res => {
-                console.log(res.data);
                 this.setState({ users: res.data });
             })
             .catch(() => {
@@ -45,15 +44,13 @@ export default class UserList extends Component {
         let requestUrl = `${url}/${id}?token=${this.props.location.state.token}`;
         axios.delete(requestUrl)
             .then(res => {
-                console.log(res);
-
-                if(res.data.success){
+                if (res.data.success) {
                     alert("Success");
                     this.getUsers();
                 }
-                else{
+                else {
                     alert(res.data.message);
-                }                
+                }
             })
             .catch(() => {
 
@@ -67,9 +64,6 @@ export default class UserList extends Component {
                     pathname: "/"
                 }} />;
         }
-
-        console.log(this.props.location.state.user_id);
-        console.log(this.state.users);
 
         return (
             <div className="user-list">
@@ -107,7 +101,7 @@ export default class UserList extends Component {
                                                             pathname: "/UpdateUser",
                                                             state: { id: user.id, token: this.props.location.state.token }
                                                         }}>Edit</Link>
-                                                    <a className="delete-link" href="#" onClick={(e) => this.deleteUser(e, user.id)}>Delete</a>
+                                                    <a className="delete-link" href="/#" onClick={(e) => this.deleteUser(e, user.id)}>Delete</a>
                                                 </div>
 
                                             }

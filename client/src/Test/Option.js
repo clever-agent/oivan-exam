@@ -35,12 +35,9 @@ export default class Option extends Component {
         e.preventDefault();
 
         this.props.delete(index);
-        console.log("delete option ", index);
     }
 
     render() {
-        console.log("render option", this.props.data.is_correct);
-
         return (
             <div className="option">
                 <Container>
@@ -55,7 +52,7 @@ export default class Option extends Component {
                         </Col>
 
                         <Col md="1">
-                            <a className="delete-link" href="#" onClick={(e) => this.delete(e, this.props.index)}>Delete</a>
+                            <a className="delete-link" href="/#" onClick={(e) => this.delete(e, this.props.index)}>Delete</a>
 
                         </Col>
                     </Row>

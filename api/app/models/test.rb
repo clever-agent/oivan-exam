@@ -2,6 +2,7 @@ class Test < ApplicationRecord
     has_many :questions, dependent: :destroy
 
     def self.create_or_update params
+        result = {success: true}
         begin
             test = Test.create_or_update_test(params)
             test.questions.destroy_all
@@ -11,18 +12,16 @@ class Test < ApplicationRecord
                     option = Option.create_or_update option_params, question.id
                 end
             end 
-
-            return {success: true}
-        rescue
-            return {success: false, message: "Failed"}
+        rescue Exception => e
+            result = {success: false, message: e.message}
         end
+
+        result
     end
 
     def self.create_or_update_test params
         item = Test.find_by_id(params[:id])
-        if item.nil?
-            item = Test.new
-        end
+        item = Test.new if item.nil?
     
         item.name = params[:name]
         item.description = params[:description]
@@ -32,11 +31,13 @@ class Test < ApplicationRecord
     end
 
     def self.destroy_test params
+        result = {success: true}
         begin
             Test.destroy(params[:id])
-            return {success: true}
-        rescue
-            return {success: false, message: "Failed"}
+        rescue Exception => e
+            {success: false, message: e.message}
         end
+
+        result
     end
 end

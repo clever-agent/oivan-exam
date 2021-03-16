@@ -4,8 +4,6 @@ class Api::ApiController < ApplicationController
     
     def auth_api
         authenticated = Token.authenticate params[:token], UserRole::STUDENT
-        if !authenticated
-            render json: {}, status: 401
-        end
+        render json: {}, status: 401 if !authenticated
     end
 end

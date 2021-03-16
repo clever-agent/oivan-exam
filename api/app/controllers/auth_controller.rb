@@ -3,9 +3,8 @@ class AuthController < ApplicationController
 
     def login
         user = User.authenticate params[:email], params[:password]
-        token = nil
-        user_id = nil
-        if !user.nil? #&& user.role == UserRole::TEACHER
+        token, user_id = nil
+        unless user.nil?
             token = Token.generate user
             user_id = user.id
             UserSession.create(user_id: user.id, token: token)

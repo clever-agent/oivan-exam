@@ -4,7 +4,7 @@ import axios from 'axios';
 import Setting from '../Shared/Setting';
 import { Container, Row, Col } from 'reactstrap';
 import { Redirect } from 'react-router';
-import {    
+import {
     Link
 } from "react-router-dom";
 import Menu from '../Menu/Menu';
@@ -29,7 +29,6 @@ export default class TestList extends Component {
         let url = Setting.resolveAPIURL("/portal/tests");
         axios.get(url, { params: { token: this.props.location.state.token } })
             .then(res => {
-                console.log(res.data);
                 this.setState({ tests: res.data });
             })
             .catch(() => {
@@ -37,21 +36,19 @@ export default class TestList extends Component {
     }
 
     delete = (e, id) => {
-        e.preventDefault();       
+        e.preventDefault();
 
         let url = Setting.resolveAPIURL("/portal/tests");
         let requestUrl = `${url}/${id}?token=${this.props.location.state.token}`;
         axios.delete(requestUrl)
             .then(res => {
-                console.log(res);
-
-                if(res.data.success){
+                if (res.data.success) {
                     alert("Success");
                     this.getTests();
                 }
-                else{
+                else {
                     alert(res.data.message);
-                }   
+                }
             })
             .catch(() => {
 
@@ -99,7 +96,7 @@ export default class TestList extends Component {
                                                     pathname: "/UpdateTest",
                                                     state: { id: test.id, token: this.props.location.state.token }
                                                 }}>Edit</Link>
-                                            <a className="delete-link" href="#" onClick={(e) => this.delete(e, test.id)}>Delete</a>
+                                            <a className="delete-link" href="/#" onClick={(e) => this.delete(e, test.id)}>Delete</a>
                                         </Col>
                                     </Row>
                                 })

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Setting from '../Shared/Setting';
 import { Container, Row, Col, Button, Label, Input } from 'reactstrap';
 import { Redirect } from 'react-router';
-import {    
+import {
     Link
 } from "react-router-dom";
 import Menu from '../Menu/Menu';
@@ -77,7 +77,6 @@ export default class UpdateUser extends Component {
             let requestUrl = `${url}/${this.props.location.state.id}?token=${this.props.location.state.token}`;
             axios.get(requestUrl)
                 .then(res => {
-                    console.log(res);
                     this.setState({
                         id: res.data.id,
                         name: res.data.name,
@@ -91,7 +90,6 @@ export default class UpdateUser extends Component {
     }
 
     onChange = (fieldName, fieldValue) => {
-        console.log(fieldValue);
         let value = fieldValue.target ? fieldValue.target.value : fieldValue;
         this.setState({
             [fieldName]: value
@@ -110,12 +108,10 @@ export default class UpdateUser extends Component {
         params["token"] = this.props.location.state.token;
         axios.post(url, params)
             .then(res => {
-                console.log(res);
-
-                if(res.data.success){
+                if (res.data.success) {
                     this.setState({ redirect: true });
                 }
-                else{
+                else {
                     alert(res.data.message);
                 }
             })
