@@ -9,7 +9,7 @@
 - Demo: [Oivan Example Demo](http://oivan-exam.clever-agent.com) (username: teacher@example.com, password: 12345678)
 ## 2. Installation
 ### 2.1 Run api
-- Below is the guide for running the Api on Docker. You can run it without Docker.
+- Below is the guide for running the Api on Docker. You can also run it without Docker.
 - The default port is 3001
 - We use Postgres. Update database connection in api/config/database.yml
 - Migrate database
@@ -67,7 +67,7 @@ npm run test
 - **GET /api/tests**
 - Params:
 ```
- token:string
+ token: string
 ```
 - Response:
 ```
@@ -83,7 +83,7 @@ npm run test
 - **Get /api/tests/id**
 - Params:
 ```
-token:string
+token: string
 ```
 - Reponse
 ```
@@ -116,7 +116,7 @@ token:string
 - **Post /api/tests**
 - Params:
 ```
-token:string
+token: string
 test: object
 ```
 Example: 
@@ -150,8 +150,3 @@ Example:
 ```
 {success: true, message: ""}
 ```
-
-**Todo**
-- Upgrade rails
-- Add ActionLog
-- Add database unique constrant and validation when updating
