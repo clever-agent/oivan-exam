@@ -1,6 +1,6 @@
 class Portal::UsersController < Portal::PortalController
     def index     
-        user_id = Token.get_user_id params[:token]
+        user_id = Token.get_user_id bearer_token
         users = User.where.not(id: user_id).select("id, name, email, role")
         render json: users
     end
