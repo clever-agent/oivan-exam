@@ -1,10 +1,14 @@
 class ApplicationController < ActionController::Base
-	before_action :set_headers
+	skip_before_action :verify_authenticity_token
+	
+	def authenticate role
+        authenticated = Token.authenticate bearer_token, role
+        render json: {}, status: 401 if !authenticated
+    end
 
-	def set_headers
-		#headers['Access-Control-Allow-Origin'] = '*'
-		#headers['Access-Control-Allow-Methods'] = '*, POST, PUT, DELETE, GET, OPTIONS'
-		#headers['Access-Control-Request-Method'] = '*'
-		#headers['Access-Control-Allow-Headers'] = '*, Origin, X-Requested-With, Content-Type, Accept, Authorization'
-	end
+    def bearer_token
+        pattern = /^Bearer /
+        header  = request.headers['Authorization']
+        header.gsub(pattern, '') if header && header.match(pattern)
+    end
 end

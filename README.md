@@ -4,7 +4,7 @@
 - The source code consists of 2 parts: Api and Client.
 - Api is a Rails app. Database is Postgres. The Api is Dockerized to run on Docker.
 - Api includes /portal for admin and /api for students.
-- Client is responsive Single Page App created with Reactjs and Bootstrap.
+- Client is a responsive Single Page App created with Reactjs and Bootstrap.
 - Api and Client are deployed to 2 different Amazon EC2 Instances.
 - Demo: [Oivan Example Demo](http://oivan-exam.clever-agent.com) (username: teacher@example.com, password: 12345678)
 ## 2. Installation
@@ -63,12 +63,33 @@ cd client
 npm run test
 ```
 ## 3. Student api
-### 3.1 List all tests
-- **GET /api/tests**
+### 3.1 Authorization
+- We authorize requests by Bearer token
+- Example:
+```
+{ headers: { Authorization: `Bearer ${token}` } }
+```
+### 3.2 Apis
+### 3.2.1 Get token
+- **POST /auth/login**
 - Params:
 ```
- token: string
+{
+  
+  "email": "student1@example.com",
+  "password": "123"
+}
 ```
+- Response
+```
+{
+"token": "eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjcsInVzZXJfcm9sZSI6InN0dWRlbnQifSwiZXhwIjoxNjE4NTQzMzE4fQ.CYXh5pJ2METkAde3FenaBoiA-dXUPu_3stl5MmVY0Nc",
+"user_id": 7
+}
+```
+### 3.2.1 List all tests
+- **GET /api/tests**
+- Params: None
 - Response:
 ```
  [{
@@ -79,11 +100,11 @@ npm run test
 }]
 ```
 
-### 3.2 Show a specific test
+### 3.2.3 Show a specific test
 - **Get /api/tests/id**
 - Params:
 ```
-token: string
+id: integer
 ```
 - Reponse
 ```
@@ -100,53 +121,44 @@ token: string
               {
                 "id": 37,
                 "content": "1",
-                "is_correct": false,
                 "question_id": 16,
               },
               {
                 "id": 38,
                 "content": "-1",
-                "is_correct": true,
                 "question_id": 16,
             }],
         }]
     }
 ```
-### 3.3 Submit test
-- **Post /api/tests**
+### 3.2.4 Submit test
+- **Post /api/submissions**
 - Params:
 ```
-token: string
 test: object
 ```
 Example: 
 ``` 
 {
-        "id": 2,
-        "name": "Math I",
-        "description": "Algebra",
+        "test_id": 2,        
+        "user_id": 3,        
         "questions": [
           {
             "id": 16,
-            "content": "2-3",
-            "test_id": 2,
-            "options": [
-              {
-                "id": 37,
-                "content": "1",
-                "is_correct": false,
-                "question_id": 16,
-              },
-              {
-                "id": 38,
-                "content": "-1",
-                "is_correct": true,
-                "question_id": 16,
-            }],
-        }]
+            "correct_option_ids": [10, 37]
+          },
+          {
+            "id": 17,
+            "correct_option_ids": [3]
+          }
+        ]
     }
 ```
 - Response
 ```
 {success: true, message: ""}
 ```
+## 4. Further work
+- Move /auth, /api, /portal to different services
+- Use Swagger to document Apis
+- Do Unit Test all models

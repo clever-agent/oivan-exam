@@ -74,8 +74,8 @@ export default class UpdateUser extends Component {
     componentDidMount() {
         if (this.props.location.state && this.props.location.state.id) {
             let url = Setting.resolveAPIURL("/portal/users");
-            let requestUrl = `${url}/${this.props.location.state.id}?token=${this.props.location.state.token}`;
-            axios.get(requestUrl)
+            let requestUrl = `${url}/${this.props.location.state.id}`;
+            axios.get(requestUrl, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
                 .then(res => {
                     this.setState({
                         id: res.data.id,
@@ -105,8 +105,7 @@ export default class UpdateUser extends Component {
         }
 
         let url = Setting.resolveAPIURL("/portal/users");
-        params["token"] = this.props.location.state.token;
-        axios.post(url, params)
+        axios.post(url, params, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
             .then(res => {
                 if (res.data.success) {
                     this.setState({ redirect: true });

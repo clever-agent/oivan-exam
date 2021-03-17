@@ -27,7 +27,7 @@ export default class TestList extends Component {
 
     getTests = () => {
         let url = Setting.resolveAPIURL("/portal/tests");
-        axios.get(url, { params: { token: this.props.location.state.token } })
+        axios.get(url, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
             .then(res => {
                 this.setState({ tests: res.data });
             })
@@ -39,8 +39,8 @@ export default class TestList extends Component {
         e.preventDefault();
 
         let url = Setting.resolveAPIURL("/portal/tests");
-        let requestUrl = `${url}/${id}?token=${this.props.location.state.token}`;
-        axios.delete(requestUrl)
+        let requestUrl = `${url}/${id}`;
+        axios.delete(requestUrl, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
             .then(res => {
                 if (res.data.success) {
                     alert("Success");

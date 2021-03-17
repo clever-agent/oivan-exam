@@ -29,7 +29,7 @@ export default class UserList extends Component {
 
     getUsers = () => {
         let url = Setting.resolveAPIURL("/portal/users");
-        axios.get(url, { params: { token: this.props.location.state.token } })
+        axios.get(url, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
             .then(res => {
                 this.setState({ users: res.data });
             })
@@ -41,8 +41,8 @@ export default class UserList extends Component {
         e.preventDefault();
 
         let url = Setting.resolveAPIURL("/portal/users");
-        let requestUrl = `${url}/${id}?token=${this.props.location.state.token}`;
-        axios.delete(requestUrl)
+        let requestUrl = `${url}/${id}`;
+        axios.delete(requestUrl, { headers: { Authorization: `Bearer ${this.props.location.state.token}` } })
             .then(res => {
                 if (res.data.success) {
                     alert("Success");
