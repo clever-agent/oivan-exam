@@ -14,8 +14,9 @@ RSpec.describe 'API Tests', type: :request do
       it 'returns tests' do
         # Note `json` is a custom helper to parse JSON responses
         # Act
-        post '/auth/login', params: {email: "student@example.com", password: "12345678"} 
-        get '/api/tests?token=' + json["token"]
+
+        post '/auth/login', params: {email: "student@example.com", password: "12345678"}
+        get '/api/tests', headers: { Authorization: "Bearer #{json['token']}" }
 
         # Assert
         expect(json).not_to be_empty
@@ -25,7 +26,7 @@ RSpec.describe 'API Tests', type: :request do
       it 'returns status code 200' do
         # Act
         post '/auth/login', params: {email: "student@example.com", password: "12345678"} 
-        get '/api/tests?token=' + json["token"]
+        get '/api/tests', headers: { Authorization: "Bearer #{json['token']}" }
 
         # Assert
         expect(response).to have_http_status(200)
@@ -34,7 +35,7 @@ RSpec.describe 'API Tests', type: :request do
       it 'no authenticated - returns status code 401' do
         # Act
         #post '/auth/login', params: {email: "teacher@example.com", password: "12345678"} 
-        get '/api/tests?token='# + json["token"]
+        get '/api/tests'# + json["token"]
 
         # Assert
         expect(response).to have_http_status(401)
@@ -49,7 +50,7 @@ RSpec.describe 'API Tests', type: :request do
           # Note `json` is a custom helper to parse JSON responses
           # Act
           post '/auth/login', params: {email: "student@example.com", password: "12345678"}
-          get "/api/tests/#{test_id}?token=" + json["token"]
+          get "/api/tests/#{test_id}", headers: { Authorization: "Bearer #{json['token']}" }
   
           # Assert
           expect(json["id"]).to eq(test_id)
@@ -58,7 +59,7 @@ RSpec.describe 'API Tests', type: :request do
         it 'returns status code 200' do
           # Act
           post '/auth/login', params: {email: "student@example.com", password: "12345678"}
-          get "/api/tests/#{test_id}?token=" + json["token"]
+          get "/api/tests/#{test_id}", headers: { Authorization: "Bearer #{json['token']}" }
   
           # Assert
           expect(response).to have_http_status(200)
@@ -67,7 +68,7 @@ RSpec.describe 'API Tests', type: :request do
         it 'no authenticated - returns status code 401' do
           # Act
           #post '/auth/login', params: {email: "teacher@example.com", password: "12345678"}
-          get "/api/tests/#{test_id}?token="# + json["token"]
+          get "/api/tests/#{test_id}"
   
           # Assert
           expect(response).to have_http_status(401)

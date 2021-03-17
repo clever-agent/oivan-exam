@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 	skip_before_action :verify_authenticity_token
 	
-	def authenticate role
+    def authenticate role
         authenticated = Token.authenticate bearer_token, role
         render json: {}, status: 401 if !authenticated
     end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Auth', type: :request do
     # initialize test data   
-    let!(:users) { create(:user, :teacher) }
+    let!(:users) { create(:user, :teacher1) }
   
     # Test suite for GET /todos
     describe 'POST /auth/login' do
@@ -10,7 +10,7 @@ RSpec.describe 'Auth', type: :request do
       #before { get '/portal/users' }
   
       it 'auth login' do
-        post '/auth/login', params: {email: "teacher@example.com", password: "12345678"}
+        post '/auth/login', params: {email: "teacher1@example.com", password: "12345678"}
         # Note `json` is a custom helper to parse JSON responses
 
         expect(json["token"]).not_to be_nil
